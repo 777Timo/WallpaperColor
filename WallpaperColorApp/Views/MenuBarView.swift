@@ -8,10 +8,23 @@ struct MenuBarView: View {
 
     var body: some View {
         // Farbinfo (nicht klickbar)
-        Button("Ø  \(ColorAnalyzer.brightnessBlock(service.lastAverageColor))") {}
-            .disabled(true)
-        Button("◆  \(ColorAnalyzer.brightnessBlock(service.lastDominantColor))") {}
-            .disabled(true)
+        Button {} label: {
+            Label {
+                Text("Ø  \(service.lastAverageColor)")
+            } icon: {
+                colorSwatch(service.lastAverageColor)
+            }
+        }
+        .disabled(true)
+
+        Button {} label: {
+            Label {
+                Text("◆  \(service.lastDominantColor)")
+            } icon: {
+                colorSwatch(service.lastDominantColor)
+            }
+        }
+        .disabled(true)
 
         Divider()
 
@@ -61,6 +74,12 @@ struct MenuBarView: View {
         Button("Beenden") {
             NSApp.terminate(nil)
         }
+    }
+
+    private func colorSwatch(_ hex: String) -> some View {
+        RoundedRectangle(cornerRadius: 2)
+            .fill(Color(nsColor: NSColor(hex: hex) ?? .gray))
+            .frame(width: 14, height: 14)
     }
 
     private var lastUpdatedText: String {

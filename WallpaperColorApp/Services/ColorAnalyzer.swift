@@ -70,19 +70,6 @@ enum ColorAnalyzer {
         )
     }
 
-    // MARK: - Helligkeit-Emoji (⬛/⬜/🔲)
-
-    nonisolated static func brightnessBlock(_ hex: String) -> String {
-        guard hex.hasPrefix("#"), hex.count == 7,
-              let value = UInt32(hex.dropFirst(), radix: 16) else { return hex }
-        let r = Double((value >> 16) & 0xFF)
-        let g = Double((value >> 8) & 0xFF)
-        let b = Double(value & 0xFF)
-        let lum = 0.299 * r + 0.587 * g + 0.114 * b
-        let block = lum < 80 ? "⬛" : (lum > 200 ? "⬜" : "🔲")
-        return "\(block) \(hex)"
-    }
-
     // MARK: - Pixel-Hilfsfunktionen
 
     private struct RGB: Sendable {
