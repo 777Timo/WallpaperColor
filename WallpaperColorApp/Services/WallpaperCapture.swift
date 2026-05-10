@@ -3,11 +3,11 @@ import CoreGraphics
 
 enum WallpaperCapture {
     /// Lädt das aktuelle Wallpaper-Bild des Hauptmonitors.
-    /// Primär via NSWorkspace (kein Deprecation-Problem), Fallback via Quartz-WindowCapture
-    /// (funktioniert auch mit Photos-Slideshow-Wallpapers).
+    /// Primär via Quartz (erfasst immer das tatsächlich angezeigte Bild, auch bei Slideshows).
+    /// Fallback via NSWorkspace für statische Wallpapers wenn Quartz fehlschlägt.
     nonisolated static func captureMainWallpaper() -> CGImage? {
-        if let cgImage = captureViaWorkspace() { return cgImage }
-        return captureViaQuartz()
+        if let cgImage = captureViaQuartz() { return cgImage }
+        return captureViaWorkspace()
     }
 
     // MARK: - Primary: NSWorkspace (static + most dynamic wallpapers)

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0] – 2026-05-10
+
+### Fixed
+- Color swatches in menu now reliably display the actual color — switched from `RoundedRectangle` (rendered as template/monochrome by macOS) to `NSImage` with `isTemplate = false`
+- Wallpaper slideshow detection: Quartz capture (`CGWindowListCreateImage`) is now the primary method; `NSWorkspace.desktopImageURL` becomes the fallback. Fixes cases where the app did not detect wallpaper changes during macOS slideshows.
+
 ## [1.1.0] – 2026-05-10
 
 ### Changed

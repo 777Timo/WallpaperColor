@@ -77,9 +77,14 @@ struct MenuBarView: View {
     }
 
     private func colorSwatch(_ hex: String) -> some View {
-        RoundedRectangle(cornerRadius: 2)
-            .fill(Color(nsColor: NSColor(hex: hex) ?? .gray))
-            .frame(width: 14, height: 14)
+        let nsColor = NSColor(hex: hex) ?? .gray
+        let image = NSImage(size: NSSize(width: 14, height: 14), flipped: false) { rect in
+            nsColor.setFill()
+            NSBezierPath(roundedRect: rect, xRadius: 2, yRadius: 2).fill()
+            return true
+        }
+        image.isTemplate = false
+        return Image(nsImage: image)
     }
 
     private var lastUpdatedText: String {
